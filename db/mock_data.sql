@@ -14,14 +14,14 @@ INSERT INTO comment(content, user_id, news_id) VALUES("Cool! t. Mary", 3, 1);
 INSERT INTO comment(content, user_id, news_id) VALUES("I prefer JS t. Jack", 1, 3);
 INSERT INTO comment(content, user_id, news_id) VALUES("Or maybe C++ t. Jack", 1, 3);
 
-INSERT INTO comment_like VALUES(3, 1);
-INSERT INTO comment_like VALUES(3, 2);
-INSERT INTO comment_like VALUES(3, 3);
-INSERT INTO comment_like VALUES(3, 4);
-INSERT INTO comment_like VALUES(3, 5);
+INSERT INTO comment_like(user_id, comment_id) VALUES(3, 1);
+INSERT INTO comment_like(user_id, comment_id) VALUES(3, 2);
+INSERT INTO comment_like(user_id, comment_id) VALUES(3, 3);
+INSERT INTO comment_like(user_id, comment_id) VALUES(3, 4);
+INSERT INTO comment_like(user_id, comment_id) VALUES(3, 5);
 
-INSERT INTO news_like VALUES(1, 1);
-INSERT INTO news_like VALUES(3, 2);
-INSERT INTO news_like VALUES(3, 3);
-INSERT INTO news_like VALUES(5, 1);
-INSERT INTO news_like VALUES(4, 1);
+INSERT INTO news_like(user_id, news_id) VALUES(1, 1);
+INSERT INTO news_like(user_id, news_id) VALUES(3, 2);
+INSERT INTO news_like(user_id, news_id) VALUES(3, 3);
+INSERT INTO news_like(user_id, news_id) VALUES(5, 1);
+INSERT INTO news_like(user_id, news_id) VALUES(4, 1);
