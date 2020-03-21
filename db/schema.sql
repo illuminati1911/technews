@@ -17,6 +17,7 @@ CREATE TABLE news (
   url VARCHAR(300) NOT NULL,
   author_id INT,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  approved_at TIMESTAMP,
   FOREIGN KEY(author_id) REFERENCES user(user_id) ON DELETE SET NULL
 );
 

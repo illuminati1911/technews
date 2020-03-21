@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+    auth-service:
+        build: 
+            context: ../
+            dockerfile: ./service-auth/Dockerfile
+        ports:
+            - 8080:80
+    comments-service:
+        build:
+            context: ../
+            dockerfile: ./service-comments/Dockerfile
+        ports:
+            - 8081:80
+    news-service:
+        build:
+            context: ../
+            dockerfile: ./service-news/Dockerfile
+        ports:
+            - 8082:80
+    user-service:
+        build:
+            context: ../
+            dockerfile: ./service-user/Dockerfile
+        ports:
+            - 8083:80
