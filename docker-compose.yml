@@ -1,27 +1,34 @@
 version: '3'
 
 services:
+    postgres:
+        build:
+            context: ./db
+        ports:
+            - 8079:5432
+        env_file: 
+            - .env
     auth-service:
         build: 
-            context: ../
+            context: ./
             dockerfile: ./service-auth/Dockerfile
         ports:
             - 8080:80
     comments-service:
         build:
-            context: ../
+            context: ./
             dockerfile: ./service-comments/Dockerfile
         ports:
             - 8081:80
     news-service:
         build:
-            context: ../
+            context: ./
             dockerfile: ./service-news/Dockerfile
         ports:
             - 8082:80
     user-service:
         build:
-            context: ../
+            context: ./
             dockerfile: ./service-user/Dockerfile
         ports:
             - 8083:80
