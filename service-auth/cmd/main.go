@@ -5,10 +5,20 @@ import (
 	"log"
 	"net/http"
 
+	// Verify env vars or load defaults for local dev
+
 	"github.com/gorilla/mux"
+	"github.com/illuminati1911/technews/utils"
+	_ "github.com/illuminati1911/technews/utils/env"
 )
 
 func main() {
+	db, err := utils.OpenDBConnection()
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+	//repo := repository.NewPSQLAuthRepository(db)
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", Index)
 	log.Fatal(http.ListenAndServe(":80", router))

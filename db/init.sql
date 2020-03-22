@@ -2,7 +2,7 @@ SET timezone = '+00:00';
 
 CREATE TABLE member (
   member_id SERIAL PRIMARY KEY,
-  nickname VARCHAR(40) NOT NULL,
+  username VARCHAR(40) NOT NULL UNIQUE,
   pwhash VARCHAR(40) NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -19,7 +19,7 @@ CREATE TABLE news (
 
 CREATE TABLE comment (
   comment_id SERIAL PRIMARY KEY,
-  content VARCHAR(500) NOT NULL,
+  content VARCHAR NOT NULL,
   member_id INT,
   news_id INT,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

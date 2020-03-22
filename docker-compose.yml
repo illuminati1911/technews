@@ -5,7 +5,7 @@ services:
         build:
             context: ./db
         ports:
-            - 8079:5432
+            - 8079:${POSTGRES_PORT}
         env_file: 
             - .env
     auth-service:
@@ -14,21 +14,37 @@ services:
             dockerfile: ./service-auth/Dockerfile
         ports:
             - 8080:80
+        env_file: 
+            - .env
+        depends_on: 
+            - postgres
     comments-service:
         build:
             context: ./
             dockerfile: ./service-comments/Dockerfile
         ports:
             - 8081:80
+        env_file: 
+            - .env
+        depends_on: 
+            - postgres
     news-service:
         build:
             context: ./
             dockerfile: ./service-news/Dockerfile
         ports:
             - 8082:80
+        env_file: 
+            - .env
+        depends_on: 
+            - postgres
     user-service:
         build:
             context: ./
             dockerfile: ./service-user/Dockerfile
         ports:
             - 8083:80
+        env_file: 
+            - .env
+        depends_on: 
+            - postgres

@@ -1,8 +1,8 @@
-INSERT INTO member(nickname, pwhash) VALUES('Jack', 'asdasd');
-INSERT INTO member(nickname, pwhash) VALUES('John', 'asdasd');
-INSERT INTO member(nickname, pwhash) VALUES('Mary', 'asdasd');
-INSERT INTO member(nickname, pwhash) VALUES('Nick', 'asdasd');
-INSERT INTO member(nickname, pwhash) VALUES('Richard', 'asdasd');
+INSERT INTO member(username, pwhash) VALUES('Jack', 'asdasd');
+INSERT INTO member(username, pwhash) VALUES('John', 'asdasd');
+INSERT INTO member(username, pwhash) VALUES('Mary', 'asdasd');
+INSERT INTO member(username, pwhash) VALUES('Nick', 'asdasd');
+INSERT INTO member(username, pwhash) VALUES('Richard', 'asdasd');
 
 INSERT INTO news(title, url, author_id) VALUES('News item 1', 'https://www.google.fi', 1);
 INSERT INTO news(title, url, author_id) VALUES('News item 2', 'https://www.google.fi', 2);
