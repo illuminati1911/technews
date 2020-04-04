@@ -1,26 +1,67 @@
 package service
 
 import (
+	"errors"
+	"log"
+
+	"github.com/illuminati1911/technews/utils"
+
 	"github.com/illuminati1911/technews/models"
 	"github.com/illuminati1911/technews/service-auth/auth"
+	"golang.org/x/crypto/bcrypt"
 )
 
+// AuthService handles authentication related business logic
 type AuthService struct {
 	repo auth.Repository
 }
 
+// NewAuthService returns instance of AuthService with repository
 func NewAuthService(repo auth.Repository) auth.Service {
 	return &AuthService{repo}
 }
 
-func (as *AuthService) Login(username string, password string) (models.User, error) {
-	// TODO: verify + JWT
-	return models.User{}, nil
+// Login will check if provided password matches users password
+// and if it does, returns a JWT
+func (as *AuthService) Login(username string, password string) (string, error) {
+	user, err := as.repo.GetUserByName(username)
+	if err != nil {
+		return "", err
+	}
+	if hashesMatch(user.Pwhash, password) {
+		token, err := utils.GenerateJWTforUser(user)
+		if err != nil {
+			return "", err
+		}
+		return token, nil
+	}
+	// Permission denied
+	return "", errors.New("AUTH: Password was incorrect")
 }
 
+// CreateUser creates a new non-admin user to the technews service
 func (as *AuthService) CreateUser(username string, password string) (models.User, error) {
-	return models.User{}, nil
+	pwhash, err := hash(password)
+	if err != nil {
+		return models.User{}, err
+	}
+	// TODO: maybe check and convert error type here
+	return as.repo.CreateUser(username, pwhash)
 }
 
-// Login(string, string) (models.User, error)
-// CreateUser(string, string) (models.User, error)
+func hash(pw string) (string, error) {
+	bpw := []byte(pw)
+	hash, err := bcrypt.GenerateFromPassword(bpw, bcrypt.MinCost)
+	return string(hash), err
+}
+
+func hashesMatch(hash string, pwCandidate string) bool {
+	bPwCandidate := []byte(pwCandidate)
+	bHash := []byte(hash)
+	err := bcrypt.CompareHashAndPassword(bHash, bPwCandidate)
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+	return true
+}

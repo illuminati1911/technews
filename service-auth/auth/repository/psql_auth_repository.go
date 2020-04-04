@@ -28,6 +28,7 @@ func NewPSQLAuthRepository(db *sql.DB) auth.Repository {
 // returns the user or error
 func (ar *PSQLAuthRepository) CreateUser(username string, pwhash string) (models.User, error) {
 	user := models.User{}
+	// TODO: Convert DB errors to local errors
 	err := ar.db.
 		QueryRow(createUserStatement, username, pwhash).
 		Scan(&user.UserID, &user.Username, &user.Pwhash, &user.CreatedAt)

@@ -3,7 +3,7 @@ SET timezone = '+00:00';
 CREATE TABLE member (
   member_id SERIAL PRIMARY KEY,
   username VARCHAR(40) NOT NULL UNIQUE,
-  pwhash VARCHAR(40) NOT NULL,
+  pwhash VARCHAR(60) NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

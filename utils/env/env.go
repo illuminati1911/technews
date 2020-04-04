@@ -12,6 +12,7 @@ var localDefaults = map[string]string{
 	"POSTGRES_HOST":     "localhost",
 	"POSTGRES_PORT":     "5432",
 	"POSTGRES_RETRIES":  "5",
+	"JWT_SECRET":        "SECRET",
 }
 
 // Init will check that above listed env vars exists
