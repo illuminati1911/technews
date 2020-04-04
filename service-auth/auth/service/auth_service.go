@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"log"
 
 	"github.com/illuminati1911/technews/utils"
@@ -26,24 +25,23 @@ func NewAuthService(repo auth.Repository) auth.Service {
 func (as *AuthService) Login(username string, password string) (string, error) {
 	user, err := as.repo.GetUserByName(username)
 	if err != nil {
-		return "", err
+		return "", models.ErrGeneralServerError
 	}
 	if hashesMatch(user.Pwhash, password) {
 		token, err := utils.GenerateJWTforUser(user)
 		if err != nil {
-			return "", err
+			return "", models.ErrGeneralServerError
 		}
 		return token, nil
 	}
-	// Permission denied
-	return "", errors.New("AUTH: Password was incorrect")
+	return "", models.ErrWrongPasswordError
 }
 
 // CreateUser creates a new non-admin user to the technews service
 func (as *AuthService) CreateUser(username string, password string) (models.User, error) {
 	pwhash, err := hash(password)
 	if err != nil {
-		return models.User{}, err
+		return models.User{}, models.ErrGeneralServerError
 	}
 	// TODO: maybe check and convert error type here
 	return as.repo.CreateUser(username, pwhash)

@@ -8,6 +8,8 @@ import (
 	"time"
 
 	// lib/pq will
+	"github.com/illuminati1911/technews/models"
+	"github.com/lib/pq"
 	_ "github.com/lib/pq"
 )
 
@@ -40,4 +42,13 @@ func OpenDBConnection() (*sql.DB, error) {
 		break
 	}
 	return db, err
+}
+
+func PQToTNError(err *pq.Error) *models.TNError {
+	switch err.Code.Name() {
+	case "unique_violation":
+		return models.ErrUsernameExistsError
+	default:
+		return models.ErrGeneralDBError
+	}
 }

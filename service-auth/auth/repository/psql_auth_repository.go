@@ -5,6 +5,8 @@ import (
 
 	"github.com/illuminati1911/technews/models"
 	"github.com/illuminati1911/technews/service-auth/auth"
+	"github.com/illuminati1911/technews/utils"
+	"github.com/lib/pq"
 )
 
 const (
@@ -32,7 +34,10 @@ func (ar *PSQLAuthRepository) CreateUser(username string, pwhash string) (models
 	err := ar.db.
 		QueryRow(createUserStatement, username, pwhash).
 		Scan(&user.UserID, &user.Username, &user.Pwhash, &user.CreatedAt)
-	return user, err
+	if err, ok := err.(*pq.Error); ok {
+		return user, utils.PQToTNError(err)
+	}
+	return user, nil
 }
 
 // GetUserByName will fetch user by their username and
@@ -42,5 +47,8 @@ func (ar *PSQLAuthRepository) GetUserByName(username string) (models.User, error
 	err := ar.db.
 		QueryRow(getUserByNameStatement, username).
 		Scan(&user.UserID, &user.Username, &user.Pwhash, &user.CreatedAt)
-	return user, err
+	if err, ok := err.(*pq.Error); ok {
+		return user, utils.PQToTNError(err)
+	}
+	return user, nil
 }
