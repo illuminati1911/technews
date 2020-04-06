@@ -50,3 +50,7 @@ func (a *AuthGRPCHandler) CreateUser(ctx context.Context, user *proto.UserDetail
 	}
 	return &empty.Empty{}, nil
 }
+
+func (a *AuthGRPCHandler) Test(ctx context.Context, user *proto.UserDetails) (*proto.UserDetails, error) {
+	return &proto.UserDetails{Username: user.GetUsername(), Password: user.GetPassword()}, nil
+}

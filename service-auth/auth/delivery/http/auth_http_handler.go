@@ -23,6 +23,7 @@ func NewAuthHTTPHandler(as auth.Service, router *gin.Engine) *AuthHTTPHandler {
 	router.Use(gin.Recovery())
 	router.POST("/login", handler.login)
 	router.POST("/create", handler.createUser)
+	router.POST("/test", handler.test)
 	return handler
 }
 
@@ -64,4 +65,13 @@ func (a *AuthHTTPHandler) createUser(c *gin.Context) {
 		return
 	}
 	c.Status(200)
+}
+
+func (a *AuthHTTPHandler) test(c *gin.Context) {
+	var json userParams
+	c.ShouldBindJSON(&json)
+	c.JSON(200, gin.H{
+		"username": json.Username,
+		"password": json.Password,
+	})
 }
