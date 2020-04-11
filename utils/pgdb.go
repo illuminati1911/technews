@@ -7,10 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	// lib/pq will
 	"github.com/illuminati1911/technews/models"
 	"github.com/lib/pq"
-	_ "github.com/lib/pq"
 )
 
 // OpenDBConnection configures and opens database
@@ -44,6 +42,7 @@ func OpenDBConnection() (*sql.DB, error) {
 	return db, err
 }
 
+// PQToTNError converts Postgres error to local TNError
 func PQToTNError(err *pq.Error) *models.TNError {
 	switch err.Code.Name() {
 	case "unique_violation":

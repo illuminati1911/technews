@@ -11,6 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// AuthGRPCHandler encapsulates GRPC endpoints
 type AuthGRPCHandler struct {
 	as auth.Service
 }

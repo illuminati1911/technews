@@ -16,7 +16,7 @@ import (
 
 func getAuthRouter() *gin.Engine {
 	router := gin.Default()
-	repo := mock.NewMockAuthRepository()
+	repo := mock.NewMemoryAuthRepository()
 	serv := service.NewAuthService(repo)
 	deliveryHttp.NewAuthHTTPHandler(serv, router)
 	return router

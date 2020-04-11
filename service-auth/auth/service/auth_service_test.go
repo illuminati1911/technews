@@ -8,7 +8,7 @@ import (
 )
 
 func TestCreateUser(t *testing.T) {
-	repo := mock.NewMockAuthRepository()
+	repo := mock.NewMemoryAuthRepository()
 	serv := service.NewAuthService(repo)
 
 	user, err := serv.CreateUser("testUser1", "testPassword1")
@@ -22,7 +22,7 @@ func TestCreateUser(t *testing.T) {
 }
 
 func TestLoginSuccess(t *testing.T) {
-	repo := mock.NewMockAuthRepository()
+	repo := mock.NewMemoryAuthRepository()
 	serv := service.NewAuthService(repo)
 
 	_, err := serv.CreateUser("testUser1", "testPassword1")
@@ -39,7 +39,7 @@ func TestLoginSuccess(t *testing.T) {
 }
 
 func TestLoginFailure(t *testing.T) {
-	repo := mock.NewMockAuthRepository()
+	repo := mock.NewMemoryAuthRepository()
 	serv := service.NewAuthService(repo)
 
 	_, err := serv.CreateUser("testUser1", "testPassword1")

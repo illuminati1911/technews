@@ -8,6 +8,7 @@ import (
 	"github.com/illuminati1911/technews/service-auth/auth"
 )
 
+// AuthHTTPHandler encapsulates HTTP endpoints
 type AuthHTTPHandler struct {
 	as auth.Service
 }
