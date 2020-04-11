@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	createUserStatement    = "INSERT INTO member (username, pwhash) VALUES($1, $2) RETURNING *"
+	createUserStatement    = "INSERT INTO member (username, pwhash, is_admin) VALUES($1, $2, FALSE) RETURNING *"
 	getUserByNameStatement = "SELECT * FROM member WHERE username = $1"
 )
 
@@ -26,14 +26,14 @@ func NewPSQLAuthRepository(db *sql.DB) auth.Repository {
 	return &PSQLAuthRepository{db}
 }
 
-// CreateUser inserts a new user to database and
+// CreateUser inserts a new non-admin user to database and
 // returns the user or error
 func (ar *PSQLAuthRepository) CreateUser(username string, pwhash string) (models.User, error) {
 	user := models.User{}
 	// TODO: Convert DB errors to local errors
 	err := ar.db.
 		QueryRow(createUserStatement, username, pwhash).
-		Scan(&user.UserID, &user.Username, &user.Pwhash, &user.CreatedAt)
+		Scan(&user.UserID, &user.Username, &user.Pwhash, &user.IsAdmin, &user.CreatedAt)
 	if err, ok := err.(*pq.Error); ok {
 		return user, utils.PQToTNError(err)
 	}
@@ -46,7 +46,7 @@ func (ar *PSQLAuthRepository) GetUserByName(username string) (models.User, error
 	user := models.User{}
 	err := ar.db.
 		QueryRow(getUserByNameStatement, username).
-		Scan(&user.UserID, &user.Username, &user.Pwhash, &user.CreatedAt)
+		Scan(&user.UserID, &user.Username, &user.Pwhash, &user.IsAdmin, &user.CreatedAt)
 	if err, ok := err.(*pq.Error); ok {
 		return user, utils.PQToTNError(err)
 	}

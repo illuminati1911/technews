@@ -14,6 +14,7 @@ func getTestUser() models.User {
 		UserID:    1,
 		Username:  "tu",
 		Pwhash:    "testhash",
+		IsAdmin:   false,
 		CreatedAt: "2020-03-22T06:33:14Z",
 	}
 }
@@ -28,8 +29,8 @@ func TestCreateUser(t *testing.T) {
 	tu := getTestUser()
 
 	rows := mock.
-		NewRows([]string{"member_id", "username", "pwhash", "created_at"}).
-		AddRow(tu.UserID, tu.Username, tu.Pwhash, tu.CreatedAt)
+		NewRows([]string{"member_id", "username", "pwhash", "is_admin", "created_at"}).
+		AddRow(tu.UserID, tu.Username, tu.Pwhash, tu.IsAdmin, tu.CreatedAt)
 	mock.ExpectQuery("INSERT INTO member").WillReturnRows(rows).RowsWillBeClosed()
 
 	repo := repository.NewPSQLAuthRepository(db)
@@ -52,8 +53,8 @@ func TestGetUserByUsername(t *testing.T) {
 	tu := getTestUser()
 
 	rows := mock.
-		NewRows([]string{"member_id", "username", "pwhash", "created_at"}).
-		AddRow(tu.UserID, tu.Username, tu.Pwhash, tu.CreatedAt)
+		NewRows([]string{"member_id", "username", "pwhash", "is_admin", "created_at"}).
+		AddRow(tu.UserID, tu.Username, tu.Pwhash, tu.IsAdmin, tu.CreatedAt)
 	mock.ExpectQuery("SELECT").WillReturnRows(rows).RowsWillBeClosed()
 
 	repo := repository.NewPSQLAuthRepository(db)

@@ -20,7 +20,13 @@ func NewMemoryAuthRepository() auth.Repository {
 // returns the user or error
 func (ar *MemoryAuthRepository) CreateUser(username string, pwhash string) (models.User, error) {
 	ar.index++
-	user := models.User{UserID: ar.index, Username: username, Pwhash: pwhash, CreatedAt: "2020-06-26T10:58:51"}
+	user := models.User{
+		UserID:    ar.index,
+		Username:  username,
+		Pwhash:    pwhash,
+		IsAdmin:   false,
+		CreatedAt: "2020-06-26T10:58:51",
+	}
 	ar.users = append(ar.users, user)
 	return user, nil
 }

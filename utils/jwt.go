@@ -15,7 +15,7 @@ func GenerateJWTforUser(user models.User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"userId":   user.UserID,
 		"username": user.Username,
-		"isAdmin":  false,
+		"isAdmin":  user.IsAdmin,
 		"expires":  strconv.FormatInt(time.Now().Add(time.Minute*time.Duration(1)).Unix(), 10),
 	})
 	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
