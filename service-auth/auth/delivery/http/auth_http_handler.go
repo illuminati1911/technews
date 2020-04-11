@@ -35,7 +35,7 @@ func (a *AuthHTTPHandler) login(c *gin.Context) {
 	token, err := a.as.Login(json.Username, json.Password)
 	if err != nil {
 		if te, ok := err.(*models.TNError); ok {
-			c.JSON(te.HttpCode, gin.H{"error": te.Message})
+			c.JSON(te.HTTPCode, gin.H{"error": te.Message})
 			return
 		}
 		c.JSON(models.ErrGeneralServerError.Code, gin.H{
@@ -55,7 +55,7 @@ func (a *AuthHTTPHandler) createUser(c *gin.Context) {
 	_, err := a.as.CreateUser(json.Username, json.Password)
 	if err != nil {
 		if te, ok := err.(*models.TNError); ok {
-			c.JSON(te.HttpCode, gin.H{"error": te.Message})
+			c.JSON(te.HTTPCode, gin.H{"error": te.Message})
 			return
 		}
 		c.JSON(models.ErrGeneralServerError.Code, gin.H{
